@@ -1,5 +1,7 @@
 import React from 'react';
 import TodoList from './components/TodoList'
+import TodoForm from './components/TodoForm'
+import './components/Todo.css'
 
 const todo = [];
 
@@ -27,6 +29,7 @@ class App extends React.Component {
   };
 
   toggleItem = itemId => {
+    console.log(itemId)
     this.setState({
       todo: this.state.todo.map(item => {
         if (itemId === item.id) {
@@ -40,6 +43,13 @@ class App extends React.Component {
     });
   };
 
+  clearDone = e => {
+    e.preventDefault();
+    this.setState({
+      todo: this.state.todo.filter(item => !item.done)
+    });
+  };
+
 
 
   render() {
@@ -47,12 +57,13 @@ class App extends React.Component {
     return (
       <div className="App">
         <div className='header'>
-        <h2>Welcome to your Todo App!</h2>
-        <TodoForm addItem={this.item} />
-        </div>
+          <h2>Welcome to your Todo App!</h2>
+          </div>
+          <TodoForm addItem={this.addItem} />
         <TodoList
           todo={this.state.todo}
           toggleItem={this.toggleItem}
+          clearDone={this.clearDone}
         />
       </div>
     );
